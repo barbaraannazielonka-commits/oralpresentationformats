@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Own the Room — A Guide to Presentation Formats</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #16213e;
+    --navy-deep: #0e1629;
+    --gold: #f2b705;
+    --gold-soft: #f7cf52;
+    --paper: #faf7f0;
+    --paper-line: #e4ddcc;
+    --ink: #1b1b1b;
+    --ink-soft: #55524a;
+    --chalk: #f5f1e8;
+    --chalk-soft: #b9c0d6;
+    --max: 780px;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #131a2c; --paper-line: #2a3350; --ink: #f1efe6; --ink-soft: #b9c0d6;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #131a2c; --paper-line: #2a3350; --ink: #f1efe6; --ink-soft: #b9c0d6;
+  }
+  html { scroll-behavior: smooth; scroll-padding-top: calc(64px + env(safe-area-inset-top, 0px)); }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: 'Inter', system-ui, sans-serif; line-height: 1.6;
+  }
+  h1, h2, h3 { font-family: 'Fraunces', Georgia, serif; margin: 0; }
+  p { margin: 0 0 1em; color: var(--ink-soft); max-width: 62ch; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+  a { color: inherit; }
+
+  nav {
+    position: sticky; top: 0; z-index: 20; background: var(--navy-deep);
+    padding-top: env(safe-area-inset-top, 0px);
+    border-bottom: 1px solid rgba(242,183,5,0.25);
+  }
+  nav .wrap { max-width: 900px; display: flex; gap: 4px; overflow-x: auto; padding: 12px 20px; }
+  nav a { flex: none; color: var(--chalk-soft); text-decoration: none; font-size: 0.9rem; font-weight: 600; padding: 8px 12px; border-radius: 100px; white-space: nowrap; }
+  nav a:hover, nav a:focus-visible { color: var(--navy-deep); background: var(--gold); }
+
+  .hero {
+    background: radial-gradient(circle at 50% 0%, #24345f 0%, var(--navy) 45%, var(--navy-deep) 100%);
+    color: var(--chalk); text-align: center; padding: 90px 24px 70px; position: relative;
+  }
+  .hero .eyebrow { color: var(--gold); font-weight: 600; font-size: 0.95rem; margin-bottom: 14px; }
+  .hero h1 { font-size: clamp(2.4rem, 6vw, 4rem); font-weight: 900; line-height: 1.05; max-width: 780px; margin: 0 auto 20px; }
+  .hero p { color: var(--chalk-soft); max-width: 52ch; margin: 0 auto; font-size: 1.1rem; }
+
+  section.format { padding: 72px 0; border-bottom: 1px solid var(--paper-line); }
+  section.format.dark { background: var(--navy); color: var(--chalk); }
+  section.format.dark p { color: var(--chalk-soft); }
+  section.format.dark .tag { background: rgba(242,183,5,0.15); color: var(--gold-soft); }
+
+  .tag { display: inline-block; background: rgba(22,33,62,0.08); color: var(--navy); font-weight: 600; font-size: 0.8rem; padding: 5px 12px; border-radius: 100px; margin-bottom: 16px; }
+  .format h2 { font-size: clamp(1.7rem, 4vw, 2.3rem); margin-bottom: 14px; }
+  .format .lede { font-size: 1.08rem; max-width: 60ch; }
+
+  .steps { list-style: none; margin: 32px 0 0; padding: 0; border-left: 2px solid var(--paper-line); }
+  section.format.dark .steps { border-left-color: rgba(242,183,5,0.35); }
+  .steps li { position: relative; padding: 4px 0 28px 28px; }
+  .steps li::before {
+    content: attr(data-mark); position: absolute; left: -13px; top: 2px;
+    width: 24px; height: 24px; border-radius: 50%; background: var(--gold); color: var(--navy-deep);
+    font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center;
+  }
+  .steps strong { display: block; font-family: 'Fraunces', serif; font-size: 1.1rem; margin-bottom: 4px; }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 36px; }
+  @media (max-width: 620px) { .grid2 { grid-template-columns: 1fr; } }
+  .card { background: rgba(0,0,0,0.03); border: 1px solid var(--paper-line); border-radius: 14px; padding: 20px 22px; }
+  section.format.dark .card { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); }
+  .card h3 { font-size: 1.05rem; margin-bottom: 10px; }
+  .card ul { margin: 0; padding-left: 18px; color: var(--ink-soft); }
+  section.format.dark .card ul { color: var(--chalk-soft); }
+  .card li { margin-bottom: 6px; }
+
+  .timer-demo { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; margin-top: 36px; padding: 24px; background: rgba(255,255,255,0.05); border: 1px solid rgba(242,183,5,0.3); border-radius: 16px; }
+  .timer-ring-wrap { position: relative; width: 108px; height: 108px; flex: none; }
+  .timer-ring { transform: rotate(-90deg); }
+  .timer-ring circle { fill: none; stroke-width: 8; }
+  .timer-ring .track { stroke: rgba(255,255,255,0.15); }
+  .timer-ring .progress { stroke: var(--gold); stroke-linecap: round; stroke-dasharray: 339.3; stroke-dashoffset: 0; transition: stroke-dashoffset linear; }
+  .timer-number { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-size: 1.9rem; font-weight: 700; color: var(--chalk); }
+  .timer-demo button { background: var(--gold); color: var(--navy-deep); border: none; font-weight: 700; padding: 12px 20px; border-radius: 100px; cursor: pointer; font-size: 0.95rem; }
+  .timer-demo button:disabled { opacity: 0.55; cursor: default; }
+  .timer-copy { flex: 1; min-width: 180px; }
+  .timer-copy p { margin: 0; font-size: 0.95rem; }
+
+  table.compare { width: 100%; border-collapse: collapse; margin-top: 28px; font-size: 0.92rem; }
+  table.compare caption { caption-side: top; text-align: left; font-family: 'Fraunces', serif; font-size: 1.3rem; margin-bottom: 18px; }
+  table.compare th, table.compare td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--paper-line); vertical-align: top; }
+  table.compare th { font-family: 'Fraunces', serif; font-weight: 600; color: var(--ink); }
+  table.compare .wrap-scroll { overflow-x: auto; }
+
+  .note-box { margin-top: 22px; padding: 16px 20px; border-left: 3px solid var(--gold); background: rgba(242,183,5,0.08); border-radius: 0 10px 10px 0; }
+  .note-box p { margin: 0; color: var(--ink-soft); font-size: 0.95rem; max-width: none; }
+  section.format.dark .note-box { background: rgba(242,183,5,0.1); }
+  section.format.dark .note-box p { color: var(--chalk-soft); }
+
+  #checklist h2 { margin-bottom: 8px; }
+  #checklist .lede { margin-bottom: 8px; }
+  .checklist-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 36px; }
+  @media (max-width: 700px) { .checklist-grid { grid-template-columns: 1fr; } }
+  .checklist-card { border: 1px solid var(--paper-line); border-radius: 14px; padding: 22px 24px; background: rgba(0,0,0,0.02); }
+  .checklist-card-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 14px; }
+  .checklist-card h3 { font-size: 1.05rem; }
+  .checklist-count { font-size: 0.78rem; font-weight: 700; color: var(--navy); background: rgba(242,183,5,0.3); padding: 3px 10px; border-radius: 100px; white-space: nowrap; flex: none; }
+  .check-item { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 11px; cursor: pointer; font-size: 0.93rem; color: var(--ink-soft); }
+  .check-item input { margin-top: 3px; flex: none; width: 16px; height: 16px; accent-color: var(--gold); cursor: pointer; }
+  .check-item.done span { text-decoration: line-through; opacity: 0.55; }
+
+  footer { background: var(--navy-deep); color: var(--chalk-soft); text-align: center; padding: 48px 24px; padding-bottom: calc(48px + env(safe-area-inset-bottom, 0px)); font-size: 0.9rem; }
+  footer strong { color: var(--gold); font-family: 'Fraunces', serif; font-size: 1.1rem; display: block; margin-bottom: 8px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="#powerpoint">PowerPoint</a>
+    <a href="#pechakucha">Pecha Kucha</a>
+    <a href="#video">Video</a>
+    <a href="#ted">TED Talk</a>
+    <a href="#poster">Poster</a>
+    <a href="#compare">Compare</a>
+    <a href="#checklist">Checklist</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Public speaking, decoded</div>
+    <h1>Own the room, whatever format you're handed</h1>
+    <p>A presentation isn't just what's on the screen — it's a format with its own rules.</p>
+  </div>
+</header>
+
+<section class="format" id="powerpoint">
+  <div class="wrap">
+    <span class="tag">Slides + speaker</span>
+    <h2>The classic PowerPoint</h2>
+    <p class="lede">This is the format most teachers assign, and it's easy to get wrong by cramming every fact onto the screen. A strong PowerPoint has a shape — a beginning, a middle, and an end — and your slides support what you say instead of replacing it.</p>
+
+    <ul class="steps">
+      <li data-mark="1"><strong>Slide 1 — Title</strong>Your name, your surname, and the topic of your presentation. Nothing else. This is your handshake, not your content.</li>
+      <li data-mark="2"><strong>Slide 2 — Content</strong>Only keywords and images belong on a slide — never long sentences. This is a speaking activity, not a writing one: the slide is a prompt for you, not a script for the audience to read.</li>
+      <li data-mark="last"><strong>Last slide — Sources</strong>Every source you used, formatted in APA style and listed alphabetically by author. It shows your research was real and lets your teacher check your work.</li>
+    </ul>
+
+    <div class="note-box">
+      <p><strong>A sources slide isn't enough on its own.</strong> Listing your sources at the end only proves you did the research — using them out loud proves you understood it. When you state a fact or statistic, say where it came from in the moment: "According to the WHO..." or "A 2023 study found...". That's what turns a bibliography into evidence.</p>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <h3>What makes it work</h3>
+        <ul>
+          <li>You could explain each slide with it turned off</li>
+          <li>Consistent fonts, colors, and layout throughout</li>
+          <li>You rehearsed the timing out loud, not just in your head</li>
+          <li>Eye contact with the audience, not the screen</li>
+          <li>Sources formatted correctly in APA style, not just pasted URLs</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>What sinks it</h3>
+        <ul>
+          <li>Paragraphs of text the audience has to read silently</li>
+          <li>Reading your slides word for word</li>
+          <li>Clip art, clashing colors, ten different fonts</li>
+          <li>A sources slide that's just raw links, not APA citations</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="format dark" id="pechakucha">
+  <div class="wrap">
+    <span class="tag">20 slides · 20 seconds each</span>
+    <h2>Pecha Kucha</h2>
+    <p class="lede">Japanese for "chit-chat," Pecha Kucha is a strict format: 20 image-only slides, each on screen for exactly 20 seconds, advancing automatically whether you're ready or not. Total runtime: 6 minutes 40 seconds. The clock — not you — is in charge.</p>
+
+    <div class="timer-demo">
+      <div class="timer-ring-wrap">
+        <svg viewBox="0 0 120 120" class="timer-ring">
+          <circle cx="60" cy="60" r="54" class="track"></circle>
+          <circle cx="60" cy="60" r="54" class="progress" id="timerProgress"></circle>
+        </svg>
+        <div class="timer-number" id="timerNumber">20</div>
+      </div>
+      <div class="timer-copy">
+        <p>This is what one slide feels like. Press start and try to describe your favorite hobby before it hits zero.</p>
+        <p style="margin-top:10px;"><a href="https://www.pechakucha.com/" target="_blank" rel="noopener" style="color: var(--gold-soft); font-weight: 600; text-decoration: underline;">See real Pecha Kucha talks at pechakucha.com ↗</a></p>
+      </div>
+      <button id="timerBtn">Start the clock</button>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <h3>What makes it work</h3>
+        <ul>
+          <li>Slides are pictures only — you supply every word out loud</li>
+          <li>You've timed your script against the real 20-second cutoff</li>
+          <li>Each slide covers exactly one beat of the story</li>
+          <li>Short, punchy sentences instead of long explanations</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>What sinks it</h3>
+        <ul>
+          <li>Writing a script for 30 seconds when you only get 20</li>
+          <li>Text-heavy slides — there's no time to read them anyway</li>
+          <li>Freezing when a slide changes before you're done talking</li>
+          <li>Never rehearsing against an actual timer</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="format" id="video">
+  <div class="wrap">
+    <span class="tag">Recorded, face on camera</span>
+    <h2>The face-to-camera video</h2>
+    <p class="lede">No live audience, no slides to hide behind — just you, talking straight into the lens. Showing your face matters: it's what makes the presentation actually yours, and it forces the same eye contact and delivery you'd need live.</p>
+
+    <div class="grid2">
+      <div class="card">
+        <h3>What makes it work</h3>
+        <ul>
+          <li>You look at the camera lens, not your own face on screen</li>
+          <li>Good lighting in front of you, not behind you</li>
+          <li>Quiet room, clear audio — this is what actually gets marked down most</li>
+          <li>You speak in a natural voice, not a flat script-read</li>
+          <li>You did a take two when the first one felt stiff</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>What sinks it</h3>
+        <ul>
+          <li>Eyes glued to notes the whole time, never the camera</li>
+          <li>A dark room or a window glaring behind you</li>
+          <li>Background noise, echo, or a shaky handheld shot</li>
+          <li>Reading in a monotone because it's "just a recording"</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="format dark" id="ted">
+  <div class="wrap">
+    <span class="tag">One idea, told as a story</span>
+    <h2>The TED-style talk</h2>
+    <p class="lede">TED talks aren't built around slides at all — they're built around a single idea worth spreading, delivered as a story with a beginning, a turn, and a payoff. Slides, if you use them, are barely there.</p>
+    <p style="margin-top:-8px;"><a href="https://www.ted.com/" target="_blank" rel="noopener" style="color: var(--gold-soft); font-weight: 600; text-decoration: underline;">Watch real talks at ted.com ↗</a></p>
+
+    <ul class="steps">
+      <li data-mark="1"><strong>The hook</strong>Open with a question, a moment, or a surprising fact — never "today I'm going to talk about."</li>
+      <li data-mark="2"><strong>The story</strong>Ground your idea in something concrete: an experience, an example, a person. Ideas stick when they're attached to a story.</li>
+      <li data-mark="3"><strong>The insight</strong>Say plainly what you want the audience to understand or believe by the end.</li>
+      <li data-mark="last"><strong>The takeaway</strong>Close with what the audience should think or do differently now. Land it — don't trail off.</li>
+    </ul>
+
+    <div class="grid2">
+      <div class="card">
+        <h3>What makes it work</h3>
+        <ul>
+          <li>You could give this talk with the slides turned off entirely</li>
+          <li>Real eye contact and movement, not a fixed spot on the floor</li>
+          <li>Your voice changes pace and volume instead of staying flat</li>
+          <li>One idea, memorable, repeated at the start and the end</li>
+          <li>Evidence named out loud — who said it or where it's from — not just implied</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>What sinks it</h3>
+        <ul>
+          <li>Trying to cover five ideas instead of committing to one</li>
+          <li>Slides doing the talking instead of you</li>
+          <li>Memorizing word-for-word and freezing if you lose your place</li>
+          <li>No clear ending — it just stops</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="format" id="poster">
+  <div class="wrap">
+    <span class="tag">One visual board, explained live</span>
+    <h2>The poster presentation</h2>
+    <p class="lede">Here the board doesn't move — you do. You create a single visual poster and stand next to it, walking visitors through your work out loud and answering questions as they come, instead of advancing through a fixed script.</p>
+
+    <div class="note-box">
+      <p><strong>Keep the sources off the poster itself.</strong> Print them as a separate handout in APA style that visitors can take with them. That keeps the board visual and uncluttered while your citations stay complete and available to anyone who wants to check them.</p>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <h3>What makes it work</h3>
+        <ul>
+          <li>Title and key visuals readable from a few feet away</li>
+          <li>Diagrams, images, and charts doing the work, not paragraphs</li>
+          <li>You can explain any part of it without reading off the board</li>
+          <li>Comfortable fielding questions instead of running a script</li>
+          <li>Sources on a separate APA-style handout, not on the poster</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>What sinks it</h3>
+        <ul>
+          <li>Dense blocks of small text no one can read from a distance</li>
+          <li>Standing silently while visitors read it themselves</li>
+          <li>No clear order, so no one knows where to start</li>
+          <li>No handout, leaving no way for anyone to check your sources</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="format" id="compare">
+  <div class="wrap">
+    <div class="wrap-scroll">
+    <table class="compare">
+      <caption>Which format fits your assignment?</caption>
+      <thead>
+        <tr><th>Format</th><th>Who controls the pace</th><th>Visuals needed</th><th>Best for</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>PowerPoint</td><td>You</td><td>Text + images, built by you</td><td>Structured reports, research findings</td></tr>
+        <tr><td>Pecha Kucha</td><td>The clock</td><td>20 images only, no text</td><td>Practicing concision and pacing</td></tr>
+        <tr><td>Face-to-camera video</td><td>You (with retakes)</td><td>None required</td><td>Reflections, when you're the whole point</td></tr>
+        <tr><td>TED-style talk</td><td>You, live</td><td>Minimal or none</td><td>Persuading a room around one idea</td></tr>
+        <tr><td>Poster presentation</td><td>Audience, through questions</td><td>Diagrams + images, built by you</td><td>Science fairs, visual research displays</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</section>
+
+
+<section class="format" id="checklist">
+  <div class="wrap">
+    <span class="tag">Self-check before you present</span>
+    <h2>Run the checklist</h2>
+    <p class="lede">Tick off each item for your format. This checklist stays as you left it if you come back to this page later.</p>
+
+    <div class="checklist-grid">
+
+      <div class="checklist-card">
+        <div class="checklist-card-head"><h3>PowerPoint</h3><span class="checklist-count" data-count-for="ppt">0/7</span></div>
+        <label class="check-item"><input type="checkbox" class="chk" data-group="ppt" id="ppt1"><span>First slide has only your full name and topic</span></label>
+        <label class="check-item"><input type="checkbox" class="chk" data-group="ppt" id="ppt2"><span>Content slides use images or short phrases, not full sentences</span></label>
+        <label class="check-item"><input type="checkbox" class="chk" data-group="ppt" id="ppt2b"><span>No long sentences anywhere — this is a speaking activity, not a writing one</span></label>
+        <label class="check-item"><input type="checkbox" class="chk" data-group="ppt" id="ppt3"><span>You cite sources out loud when you use them, not only at the end</span></label>
+        <label class="check-item"><input type="checkbox" class="chk" data-group="ppt" id="ppt4"><span>Last slide lists every source in APA format, alphabetized</span></label>
+        <label class="check-item"><input type="checkbox" class="chk" data-group="ppt" id="ppt5"><span>Rehearsed the full talk out loud at least once</span></label>
+        <label class="check-item"><input type="checkbox" class="chk" data-group="ppt" id="ppt6"><span>Practiced eye contact instead of reading the slides</span></label>
+      </div>
+
+      <div class="checklist-card">
+        <div class="checklist-card-head"><h3>Pecha Kucha</h3><span class="checklist-count" data-count-for="pk">0/5</span></div>
+        <label class="check-item"><input type="checkbox" class="chk" data-group="pk" id="pk1"><span>Exactly 20 slides, images only, no text</span></label>
+        <label class="check-item"><input type="checkbox" class="chk" data-group="pk" id="pk2"><span>Script timed against a real 20-seconds-per-slide clock</span></label>
+        <label class="check-item"><input type="checkbox" class="chk" data-group="pk" id="pk3"><span>Each slide covers exactly one beat of the story</span></label>
+        <label class="check-item"><input type="checkbox" class="chk" data-group="pk" id="pk4"><span>Rehearsed the full 6:40 run-through start to finish</span></label>
+        <label class="check-item"><input type="checkbox" class="chk" data-group="pk" id="pk5"><span>Comfortable moving on even if a slide changes mid-sentence</span></label>
+      </div>
+
+      <div class="checklist-card">
+        <div class="checklist-card-head"><h3>Face-to-camera video</h3><span class="checklist-count" data-count-for="vid">0/5</span></div>
+        <label class="check-item"><input type="checkbox" class="chk" data-group="vid" id="vid1"><span>Filmed in a well-lit space, facing the light source</span></label>
+        <label class="check-item"><input type="checkbox" class="chk" data-group="vid" id="vid2"><span>Looking at the camera lens, not your own face on screen</span></label>
+        <label class="check-item"><input type="checkbox" class="chk" data-group="vid" id="vid3"><span>Audio is clear, with no background noise</span></label>
+        <label class="check-item"><input type="checkbox" class="chk" data-group="vid" id="vid4"><span>Speaking naturally, not reading in a monotone</span></label>
+        <label class="check-item"><input type="checkbox" class="chk" data-group="vid" id="vid5"><span>Recorded a second take if the first one felt stiff</span></label>
+      </div>
+
+      <div class="checklist-card">
+        <div class="checklist-card-head"><h3>TED-style talk</h3><span class="checklist-count" data-count-for="ted">0/6</span></div>
+        <label class="check-item"><input type="checkbox" class="chk" data-group="ted" id="ted1"><span>Opens with a hook, not "today I'm going to talk about..."</span></label>
+        <label class="check-item"><input type="checkbox" class="chk" data-group="ted" id="ted2"><span>Idea is grounded in a real story or example</span></label>
+        <label class="check-item"><input type="checkbox" class="chk" data-group="ted" id="ted3"><span>Only one central idea, repeated at the start and the end</span></label>
+        <label class="check-item"><input type="checkbox" class="chk" data-group="ted" id="ted4"><span>Evidence is named out loud — who said it, where it's from</span></label>
+        <label class="check-item"><input type="checkbox" class="chk" data-group="ted" id="ted5"><span>Practiced eye contact and vocal variety, not a flat read</span></label>
+        <label class="check-item"><input type="checkbox" class="chk" data-group="ted" id="ted6"><span>Ending clearly lands the takeaway</span></label>
+      </div>
+
+      <div class="checklist-card">
+        <div class="checklist-card-head"><h3>Poster presentation</h3><span class="checklist-count" data-count-for="poster">0/5</span></div>
+        <label class="check-item"><input type="checkbox" class="chk" data-group="poster" id="poster1"><span>Title and key visuals are readable from a few feet away</span></label>
+        <label class="check-item"><input type="checkbox" class="chk" data-group="poster" id="poster2"><span>Poster uses diagrams, images, or charts, not paragraphs</span></label>
+        <label class="check-item"><input type="checkbox" class="chk" data-group="poster" id="poster3"><span>Can explain every part of it without reading off the board</span></label>
+        <label class="check-item"><input type="checkbox" class="chk" data-group="poster" id="poster4"><span>Sources are on a separate handout, formatted in APA</span></label>
+        <label class="check-item"><input type="checkbox" class="chk" data-group="poster" id="poster5"><span>Comfortable answering audience questions on the spot</span></label>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <strong>Every format rewards the same thing</strong>
+  Know your material well enough that the format is just a container, not a crutch.
+  <p style="margin-top:24px; color: var(--chalk-soft); font-size: 0.85rem; max-width:none;">Nannestad High School — Barbara Anna Zielonka</p>
+</footer>
+
+<script>
+  (function(){
+    const CIRC = 339.3;
+    const ring = document.getElementById('timerProgress');
+    const num = document.getElementById('timerNumber');
+    const btn = document.getElementById('timerBtn');
+    let interval = null;
+
+    btn.addEventListener('click', function(){
+      if (interval) return;
+      btn.disabled = true;
+      let t = 20;
+      num.textContent = t;
+      ring.style.transition = 'none';
+      ring.style.strokeDashoffset = 0;
+      void ring.offsetWidth;
+      ring.style.transition = 'stroke-dashoffset 20s linear';
+      ring.style.strokeDashoffset = CIRC;
+      interval = setInterval(function(){
+        t -= 1;
+        num.textContent = Math.max(t, 0);
+        if (t <= 0) {
+          clearInterval(interval);
+          interval = null;
+          btn.disabled = false;
+        }
+      }, 1000);
+    });
+  })();
+
+  (function(){
+    const STORE_KEY = 'presentation-checklist-v1';
+    let saved = {};
+    try {
+      saved = JSON.parse(localStorage.getItem(STORE_KEY)) || {};
+    } catch (e) { saved = {}; }
+
+    const boxes = document.querySelectorAll('.chk');
+    const counts = {};
+
+    function updateCount(group) {
+      const groupBoxes = document.querySelectorAll('.chk[data-group="' + group + '"]');
+      const done = Array.from(groupBoxes).filter(b => b.checked).length;
+      const badge = document.querySelector('.checklist-count[data-count-for="' + group + '"]');
+      if (badge) badge.textContent = done + '/' + groupBoxes.length;
+    }
+
+    boxes.forEach(function(box){
+      if (saved[box.id]) {
+        box.checked = true;
+        box.closest('.check-item').classList.add('done');
+      }
+      counts[box.dataset.group] = true;
+
+      box.addEventListener('change', function(){
+        box.closest('.check-item').classList.toggle('done', box.checked);
+        saved[box.id] = box.checked;
+        try { localStorage.setItem(STORE_KEY, JSON.stringify(saved)); } catch (e) {}
+        updateCount(box.dataset.group);
+      });
+    });
+
+    Object.keys(counts).forEach(updateCount);
+  })();
+</script>
+
+</body>
+</html>
